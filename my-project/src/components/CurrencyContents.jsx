@@ -1,9 +1,9 @@
 import ArrowRight from '../assets/icon_arrowright_blue.svg'
 import { useState, useEffect, useRef } from 'react'
 import FlagBTC from '../assets/flag_btc.png'
-import FlagJPY from '../assets/flag_JPN.png'
-import FlagUSD from '../assets/flag_USA.png'
-import FlagIDR from '../assets/flag_IDN.png'
+import FlagJPY from '../assets/flag_jpy.png'
+import FlagUSD from '../assets/flag_usd.png'
+import FlagIDR from '../assets/flag_idr.png'
 import ArrowRefresh from '../assets/icon_refresh.svg'  
 import axios from 'axios';
 
