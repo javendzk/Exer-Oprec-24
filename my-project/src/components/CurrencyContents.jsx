@@ -1,41 +1,93 @@
 import ArrowRight from '../assets/icon_arrowright_blue.svg'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import FlagBTC from '../assets/flag_btc.png'
 import FlagJPY from '../assets/flag_JPN.png'
 import FlagUSD from '../assets/flag_USA.png'
 import FlagIDR from '../assets/flag_IDN.png'
-import ArrowRefresh from '../assets/icon_refresh.svg'   
+import ArrowRefresh from '../assets/icon_refresh.svg'  
+import axios from 'axios';
 
 export default function CurrencyContents() {
     const [duid, setDuid] = useState('0.00');
-    const [CurrencyBefore, setCurrencyBefore] = useState ("");
-    const [CurrencyAfter, setCurrencyAfter] = useState ("");
-    const [FlagBefore, setFlagBefore] = useState ("");
-    const [FlagAfter, setFlagAfter] = useState ("");
+    const [date, setDate] = useState('');
+    const [currencyBefore, setCurrencyBefore] = useState("IDR");
+    const [currencyAfter, setCurrencyAfter] = useState("USD");
+    const [flagBefore, setFlagBefore] = useState(FlagIDR);
+    const [flagAfter, setFlagAfter] = useState(FlagUSD);
+    const [resultTotal, setResultTotal] = useState("= USD");
+    const [resultSatuan, setResultSatuan] = useState("1 IDR = USD");
+    const [satuanRate, setSatuanRate] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    
-    useEffect(() => {
-            setCurrencyBefore("IDR");
-            setFlagBefore(eval("FlagIDR"));
-            setCurrencyAfter("USD");
-            setFlagAfter(eval("FlagUSD"));
-    }, [])
-
-    const handleFlagChange = (event) => {
-        const selectedFlag = event.target.value;
-        if (event.target.id == "dropdown_before") setFlagBefore(eval(`Flag${selectedFlag}`));
-        else if (event.target.id == "dropdown_after") setFlagAfter(eval(`Flag${selectedFlag}`));
-    }
-
-    const handleDuidChange = (event) => {
-        const value = event.target.value.replace(/[^0-9.,]/g, '');
-        setDuid(value);
-    };
+    const sleep = ms => new Promise(r => setTimeout(r, ms));     // promise sleep dari stackoverflow
 
     const handleDuidBlur = () => {
         let formattedDuid = parseFloat(duid).toFixed(2);
         if (isNaN(formattedDuid) || formattedDuid === '') formattedDuid = '0.00';
         setDuid(formattedDuid);
+    };
+
+    const refreshRate = async() => {
+        setLoading(true);
+        await sleep(300);
+        let currencyBeforeLowerCase = currencyBefore.toLowerCase();
+        let currencyAfterLowerCase = currencyAfter.toLowerCase();
+
+        axios.get(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currencyBeforeLowerCase}.json`)
+        .then(function (response) {
+            setSatuanRate(response["data"][currencyBeforeLowerCase][currencyAfterLowerCase]);
+            const formattedDate = new Date(response["data"]["date"]).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            setDate(formattedDate);
+        })
+        .catch(function (error) {
+            setResultTotal("Fetching rate failed");
+            setResultSatuan("Retry by refreshing the page");
+        });
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        if (currencyBefore == currencyAfter) {
+            setResultTotal("Currencies must be different");
+            setResultSatuan("Kindly select another currency");
+            return;
+        }
+
+        refreshRate();
+        handleDuidChange();
+    }, [currencyBefore, currencyAfter, satuanRate]);
+
+    const handleDuidChange = () => {
+        const input= document.getElementById("duid_id"); //tadinya mau pake (event) tapi gabisa karna ada handleDuitChange()
+        const value = input.value.replace(/[^0-9.,]/g, '');
+        setDuid(value); 
+
+        let formattedResultTotal, formattedResultSatuan;
+        if (currencyAfter == "BTC") {
+            formattedResultTotal = (satuanRate * value).toLocaleString('en-US', {
+                minimumFractionDigits: 8, maximumFractionDigits: 8,
+            });
+            formattedResultSatuan = (satuanRate).toLocaleString('en-US', {
+                minimumFractionDigits: 9, maximumFractionDigits: 9,
+            });
+        } else if (currencyBefore == "BTC") {
+            formattedResultTotal = (satuanRate * value).toLocaleString('en-US', {
+                minimumFractionDigits: 3, maximumFractionDigits: 3,
+            });
+            formattedResultSatuan = (satuanRate).toLocaleString('en-US', {
+                minimumFractionDigits: 3, maximumFractionDigits: 3,
+            });
+        } else {
+            formattedResultTotal = (satuanRate * value).toLocaleString('en-US', {
+                minimumFractionDigits: 3, maximumFractionDigits: 3,
+            });
+            formattedResultSatuan = (satuanRate).toLocaleString('en-US', {
+                minimumFractionDigits: 6, maximumFractionDigits: 6,
+            });
+        }
+
+        setResultTotal(`= ${formattedResultTotal} ${currencyAfter}`);
+        setResultSatuan(`1 ${currencyBefore} = ${formattedResultSatuan} ${currencyAfter}`);
     };
 
     return (
@@ -50,8 +102,8 @@ export default function CurrencyContents() {
                         <label className="font-open text-gray-600" htmlFor="div_amount">Amount</label>
                         <div id="div_amount" className='flex flex-row justify-between m-0 p-o rounded-md border_1 border-gray-300 shadow-md w-full h-12'>
                             <div className='flex items-center pl-3 text-md font-bold font-poppins rounded-md bg-none border-none focus:outline-none'>Rp</div>
-                            <input type='text' value={duid} onBlur={handleDuidBlur} onChange={handleDuidChange} inputMode='numeric' className=' flex align-center pl-1 text-md font-poppins rounded-md resize-none w-full h-full border-none focus:outline-none focus:border-blue-500' />
-                            <div className='loader mt-2 mx-2'></div>
+                            <input type='text' value={duid} id="duid_id" onBlur={handleDuidBlur} onChange={handleDuidChange} inputMode='numeric' className='flex align-center pl-1 text-md font-poppins rounded-md resize-none w-full h-full border-none focus:outline-none focus:border-blue-500' />
+                            <div className={`loader mt-2 mx-2 ${loading? "opacity-100" : "opacity-0"}`} ></div>
                         </div>
                     </div>
                     <div className="flex justify-between flex-row mt-4">
@@ -59,9 +111,9 @@ export default function CurrencyContents() {
                             <label className="font-open text-gray-600" htmlFor="div_before">Origin</label>
                             <div id="div_before"className="flex h-12 flex-row rounded-md shadow-md w-full">
                                 <div className='bg-gray-100 h-full w-16 rounded-md border_1 border-r-0 rounded-tr-none rounded-br-none border-gray-300 font-poppins text-md flex items-center justify-center'>
-                                    <img className='w-7 border_1 border-gray-300 rounded-md' src={FlagBefore}></img>
+                                    <img className='w-7 border_1 border-gray-300 rounded-md' src={flagBefore}></img>
                                 </div>
-                                <select onChange={handleFlagChange} id="dropdown_before" className="w-full h-full pr-8 pl-2 font-poppins rounded-tl-none rounded-bl-none rounded-md border_1 border-gray-300  focus:outline-none focus:border-blue-500">
+                                <select onChange={(event) => { setFlagBefore(eval(`Flag${event.target.value}`)); setCurrencyBefore(event.target.value); }} id="dropdown_before" className="w-full h-full pr-8 pl-2 font-poppins rounded-tl-none rounded-bl-none rounded-md border_1 border-gray-300  focus:outline-none focus:border-blue-500">
                                     <option value="IDR">IDR - Indonesian Rupiah</option>
                                     <option value="BTC">BTC - Bitcoin</option>
                                     <option value="USD">USD - United States Dollar</option>
@@ -74,9 +126,9 @@ export default function CurrencyContents() {
                             <label className="font-open text-gray-600" htmlFor="div_before">Convert To</label>
                             <div id="div_before"className="flex h-12 flex-row rounded-md shadow-md w-full">
                                 <div className='bg-gray-100 h-full w-16 rounded-md border_1 border-r-0 rounded-tr-none rounded-br-none border-gray-300 font-poppins text-md flex items-center justify-center'>
-                                    <img className='w-7 border_1 border-gray-300 rounded-md' src={FlagAfter}></img>
+                                    <img className='w-7 border_1 border-gray-300 rounded-md' src={flagAfter}></img>
                                 </div>
-                                <select id="dropdown_after" onChange={handleFlagChange} className="w-full h-full pr-8 pl-2 font-poppins rounded-tl-none rounded-bl-none rounded-md border_1 border-gray-300  focus:outline-none focus:border-blue-500">
+                                <select id="dropdown_after" onChange={(event) => { setFlagAfter(eval(`Flag${event.target.value}`)); setCurrencyAfter(event.target.value); }} className="w-full h-full pr-8 pl-2 font-poppins rounded-tl-none rounded-bl-none rounded-md border_1 border-gray-300  focus:outline-none focus:border-blue-500">
                                     <option value="USD">USD - United States Dollar</option>
                                     <option value="IDR">IDR - Indonesian Rupiah</option>
                                     <option value="BTC">BTC - Bitcoin</option>
@@ -86,21 +138,19 @@ export default function CurrencyContents() {
                         </div>
                     </div>
                     <div className='flex flex-row w-full mt-8 h-24'>
-                        <div className='select-text flex flex-col width_65 mr-8'>
-                            <p id="result_total" className="font-roboto bold text-3xl text-gray-500">= 0.000064008211 USD</p>
-                            <p id="result_single"className="font-roboto bold text-md text-gray-500">1 IDR = 0.000064008211 USD</p>
+                        <div className='select-text flex flex-col width_65 mr-8 overflow-x-hidden'>
+                            <p id="result_total" className={`max-w-92 truncate font-roboto bold text-3xl transition-all duration-200 ${loading? "text-gray-300" : "text-gray-500"}`}>{resultTotal}</p>
+                            <p id="result_single"className={`font-roboto bold text-md transition-all duration-200 ${loading? "text-gray-300" : "text-gray-500"}`}>{resultSatuan}</p>
                         </div>
                         <div className='flex flex-col justify-between w-2/5 select-text'>
                             <div className='flex flex-row w-full justify-between h-12 items-center'>
-                                <button className=' flex justify-center items-center border-2 hover:bg-blue-100 bg-white border-blue-800 hover:border-blue-600 shadow-md duration-500 rounded-lg text-blue-800 hover:text-blue-600 text-sm font-open h-12 width_48'>API Provider</button>
-                                <button className='text-sm flex justify-center items-center shadow-md hover:bg-blue-600 duration-500 rounded-lg text-white font-open h-12  bg-blue-800 width_48'>Refresh Rates
+                                <button onClick={() => window.open("https://github.com/fawazahmed0/currency-api")} className=' flex justify-center items-center border-2 hover:bg-blue-100 bg-white border-blue-800 hover:border-blue-600 shadow-md duration-500 rounded-lg text-blue-800 hover:text-blue-600 text-sm font-open h-12 width_48'>API Provider</button>
+                                <button onClick={() => setSatuanRate('')} className='text-sm flex justify-center items-center shadow-md hover:bg-blue-600 duration-500 rounded-lg text-white font-open h-12  bg-blue-800 width_48'>Refresh
                                     <img src={ArrowRefresh} className='ml-2 w-4'></img>
                                 </button>
                             </div>
-                            <div className='text-gray-600 font-inter text-xs tracking-wider mb-1'>
-                                <p>Real-time exchange rates provided by 
-                                    <a className="pl-1 text-blue-800 underline hover:text-blue-600 duration-200" href='https://www.exchangerate-api.com/'>ERAPI</a></p>
-                                <p>Last updated: Jan 23, 2024, 08:12 WIB</p>
+                            <div className='text-gray-600 font-inter text-xs tracking-wider mt-3'>
+                                <p>Real-time exchange rates by Fawazahmed<br />last API Update: {date}</p>
                             </div>
                         </div>
                     </div>

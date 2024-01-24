@@ -10,7 +10,6 @@ export default function NavBar({ onScroll }) {
     const handleScroll = () => {
         const isScrolled = window.scrollY > 0;
         setScrolled(isScrolled);
-        onScroll(isScrolled);
     };
   
     useEffect(() => {
