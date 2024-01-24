@@ -18,8 +18,9 @@ export default function CurrencyContents() {
     const [resultSatuan, setResultSatuan] = useState("1 IDR = USD");
     const [satuanRate, setSatuanRate] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const sleep = ms => new Promise(r => setTimeout(r, ms));     // promise sleep dari stackoverflow
+    
+    const imageLoader = {BTC: FlagBTC, JPY: FlagJPY, IDR: FlagIDR, USD: FlagUSD,};  // quick fix supaya semua flag di load server
+    const sleep = ms => new Promise(r => setTimeout(r, ms));  // promise sleep dari stackoverflow
 
     const handleDuidBlur = () => {
         let formattedDuid = parseFloat(duid).toFixed(2);
@@ -42,6 +43,7 @@ export default function CurrencyContents() {
         .catch(function (error) {
             setResultTotal("Fetching rate failed");
             setResultSatuan("Retry by refreshing the page");
+            console.log(error);
         });
         setLoading(false);
     };
@@ -58,7 +60,7 @@ export default function CurrencyContents() {
     }, [currencyBefore, currencyAfter, satuanRate]);
 
     const handleDuidChange = () => {
-        const input= document.getElementById("duid_id"); //tadinya mau pake (event) tapi gabisa karna ada handleDuitChange()
+        const input= document.getElementById("duid_id");  //tadinya mau pake (event) tapi gabisa karna ada handleDuitChange()
         const value = input.value.replace(/[^0-9.,]/g, '');
         setDuid(value); 
 
