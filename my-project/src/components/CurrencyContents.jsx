@@ -150,10 +150,10 @@ export default function CurrencyContents() {
                                     <img src={ArrowRefresh} className='ml-2 w-4'></img>
                                 </button>
                             </div>
-                            <div className='text-gray-600 font-inter text-xs tracking-wider mt-3'>
+                            <div className='text-gray-600 font-inter flex flex-row justify-start items-start text-xs tracking-wider mt-3'>
                                 <p>Real-time exchange rates by Fawazahmed<br />last API Update: {date}</p>
-                                <img className="w-0 h-0" src={FlagBTC}></img>
-                                <img className="w-0 h-0" src={FlagJPY}></img>
+                                <img className="w-1 h-1 opacity-0" src={FlagBTC}></img>
+                                <img className="w-1 h-1 opacity-0" src={FlagJPY}></img>
                             </div>
                         </div>
                     </div>
