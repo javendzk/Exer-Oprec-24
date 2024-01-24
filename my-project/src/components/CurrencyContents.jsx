@@ -19,7 +19,6 @@ export default function CurrencyContents() {
     const [satuanRate, setSatuanRate] = useState('');
     const [loading, setLoading] = useState(false);
     
-    const imageLoader = {BTC: FlagBTC, JPY: FlagJPY, IDR: FlagIDR, USD: FlagUSD,};  // quick fix supaya semua flag di load server
     const sleep = ms => new Promise(r => setTimeout(r, ms));  // promise sleep dari stackoverflow
 
     const handleDuidBlur = () => {
@@ -91,6 +90,9 @@ export default function CurrencyContents() {
         setResultTotal(`= ${formattedResultTotal} ${currencyAfter}`);
         setResultSatuan(`1 ${currencyBefore} = ${formattedResultSatuan} ${currencyAfter}`);
     };
+
+    let imageLoader = {BTC: {FlagBTC}, JPY: {FlagJPY}, IDR: {FlagIDR}, USD: {FlagUSD}};  
+    imageLoader.MSG = "Image Loaded"; // quick fix supaya semua flag di load server
 
     return (
         <div className="flex flex-col absolute top-32 w-full">
