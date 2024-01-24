@@ -91,9 +91,6 @@ export default function CurrencyContents() {
         setResultSatuan(`1 ${currencyBefore} = ${formattedResultSatuan} ${currencyAfter}`);
     };
 
-    let imageLoader = {BTC: {FlagBTC}, JPY: {FlagJPY}, IDR: {FlagIDR}, USD: {FlagUSD}};  
-    imageLoader.MSG = "Image Loaded"; // quick fix supaya semua flag di load server
-
     return (
         <div className="flex flex-col absolute top-32 w-full">
             <div className="flex justify-start h-20 flex-col items-center">
@@ -155,6 +152,8 @@ export default function CurrencyContents() {
                             </div>
                             <div className='text-gray-600 font-inter text-xs tracking-wider mt-3'>
                                 <p>Real-time exchange rates by Fawazahmed<br />last API Update: {date}</p>
+                                <img className="w-0 h-0" src={FlagBTC}></img>
+                                <img className="w-0 h-0" src={FlagJPY}></img>
                             </div>
                         </div>
                     </div>
