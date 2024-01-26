@@ -66,7 +66,7 @@ export default function MenuPicker() {
                         </motion.div>
                     </NavLink>
                 </div>
-                <NavLink onclick={() => window.open("https://drive.google.com/file/d/1fHAtf4Ac7bXM8uCbBCE88VM3ICzRSNCR/view?usp=sharing")}>
+                <a target="_blank" href="https://drive.google.com/file/d/1fHAtf4Ac7bXM8uCbBCE88VM3ICzRSNCR/view?usp=sharing">
                     <motion.div variants={fadeUpAnimation} whileHover="hover" initial="before" whileInView="after" style={{ width: '450px' }} className='mt-10 width_bottomcard bg-gray-100 hover:bg-gray-200 hover:border-gray-400 rounded-2xl border_1 border-gray-300 flex flex-row items-center duration-300 h-40'>
                         <img src={Menuliz} className="h-32 border_1 border-gray-300 rounded-2xl mx-4 my-4"></img>
                         <div className='flex flex-col mx-4 my-4'>
@@ -74,7 +74,7 @@ export default function MenuPicker() {
                             <p className='mt-2 font-poppins text-sm text-justify text-grey-600'>My answers for theoretical questions of the software division, Exercise Open Recruitment 2024</p>
                         </div>
                     </motion.div>
-                </NavLink>
+                </a>
             </div>
         </div>
     )
