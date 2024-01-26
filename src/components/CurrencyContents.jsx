@@ -39,7 +39,7 @@ export default function CurrencyContents() {
               currencies: `${currencyAfter}`,
             },
             headers: {
-              'X-RapidAPI-Key': '4bf617d0a1msha9e4a4dd7507db5p12f2cdjsnb51aef32ce0c',
+              'X-RapidAPI-Key': '1a4ff51e51msh4504837aa4c7e7bp186622jsne3f7680d452d',
               'X-RapidAPI-Host': 'currency-converter-pro1.p.rapidapi.com'
             }
         };
