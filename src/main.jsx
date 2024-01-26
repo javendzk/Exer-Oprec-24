@@ -10,23 +10,23 @@ import TemperaturePage from './pages/TemperaturePage.jsx'
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Navigate to="/Exer-Oprec-24/home" replace />,
+        element: <Navigate to="/home" replace />,
     },
     {
-        path: "/Exer-Oprec-24/home",
+        path: "/home",
         element: <LandingPage />,
     },
     {
-        path: "/Exer-Oprec-24/currency",
+        path: "/currency",
         element: <CurrencyPage />,
     },
     {
-        path: "/Exer-Oprec-24/Temperature",
+        path: "/Temperature",
         element: <TemperaturePage />,
     },
     {
         path: "*",
-        element: <Navigate to="/Exer-Oprec-24/home" replace />,
+        element: <Navigate to="/home" replace />,
     },
 ]);
 
