@@ -1,5 +1,5 @@
 # Javen's for EXER 24 OPREC
-Hello there, this is my submission for EXERCISE's 2024 Open Recruitment. Built with Vite.js, TailwindCSS, and React.js. I really recommend viewing the page via pc or laptop, since i havent adjusted it for phone or smaller screens. Thats all, i hope you like it and have a nice day! :) 
+Hello there, this is my submission for EXERCISE's 2024 Open Recruitment. Built with Vite.js, TailwindCSS, and React.js. I really recommend viewing the page via pc or laptop, since i havent adjusted it for phone or smaller screens. Thats all, i hope you like it and have a nice day!  :)  
 
 ## Libraries & API
 Currency API: https://rapidapi.com/Dezento/api/currency-converter-pro1 
