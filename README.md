@@ -4,6 +4,6 @@ Hello there, this is my submission for EXERCISE's 2024 Open Recruitment. Built w
 ## Libraries & API
 Currency API: https://rapidapi.com/Dezento/api/currency-converter-pro1 
 Extra Libraries installed:
-- Axios v1.6.5: https://www.npmjs.com/package/axios
-- React Router v6.21.3: https://www.npmjs.com/package/react-router-dom
-- Framer Motion v11.0.0: https://www.npmjs.com/package/framer-motion
+- Axios v1.6.5
+- React Router v6.21.3
+- Framer Motion v11.0.0
