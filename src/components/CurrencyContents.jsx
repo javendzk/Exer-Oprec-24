@@ -5,7 +5,8 @@ import FlagJPY from '../assets/flag_jpy.png'
 import FlagUSD from '../assets/flag_usd.png'
 import FlagIDR from '../assets/flag_idr.png'
 import ArrowRefresh from '../assets/icon_refresh.svg'  
-import axios from 'axios';
+import axios from 'axios'
+import React from 'react'
 
 export default function CurrencyContents() {
     const [duid, setDuid] = useState('0.00');

@@ -3,6 +3,7 @@ import CurrencyContents from '../components/CurrencyContents.jsx'
 import Footer from '../components/Footer.jsx'
 import { useState } from 'react'
 import { motion } from "framer-motion"
+import React from 'react'
 
 // kalo CurrencyContents kena API limit, bisa ganti key
 // backup key: '7e7ef63d91mshb5a82afc51d515dp12f77ajsn4e7ac9e2f32e'

@@ -1,5 +1,5 @@
-import { NavLink } from "react-router-dom";
-
+import { NavLink } from "react-router-dom"
+import React from 'react'
 
 export default function NavItem({title, target}) {
     return (

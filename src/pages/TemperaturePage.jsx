@@ -3,6 +3,7 @@ import TempContents from '../components/TempContents.jsx'
 import Footer from '../components/Footer.jsx'
 import { useState } from 'react'
 import { motion } from "framer-motion"
+import React from 'react'
 
 const fadeInAnimation = {
     before: {

@@ -3,8 +3,8 @@ import Panaz from '../assets/stock_temperature.jpg'
 import Duid from '../assets/stock_currency.jpg'
 import Menuliz from '../assets/stock_essay.jpeg'
 import { motion } from "framer-motion"
-import { NavLink } from "react-router-dom";
-
+import { NavLink } from "react-router-dom"
+import React from 'react'
 
 const fadeInAnimation = {
     before: {

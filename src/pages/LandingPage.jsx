@@ -5,6 +5,7 @@ import Footer from '../components/Footer.jsx'
 import BgFull from '../assets/bg_full.png'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import React from 'react'
 
 const fadeInAnimation = {
     before: {
