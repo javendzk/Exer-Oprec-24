@@ -1,5 +1,4 @@
 import Figure from '../assets/landing_figure.png'
-import React from 'react'
 
 export default function LandingContents() {
     

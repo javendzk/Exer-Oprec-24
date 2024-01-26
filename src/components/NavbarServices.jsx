@@ -1,7 +1,6 @@
 import javn from '../assets/logo_javen.png'
 import NavItem from './NavItem.jsx'
 import React, { useState, useEffect } from 'react'
-import React from 'react'
 
 export default function NavBar({ onScroll }) {
     const [scrolled, setScrolled] = useState(false);

@@ -1,7 +1,6 @@
 import Linkedin from '../assets/icon_linkedin.svg'
 import Twitter from '../assets/icon_twitter.svg'
 import Github from '../assets/icon_github.svg'
-import React from 'react'
 
 export default function Footer() {
 

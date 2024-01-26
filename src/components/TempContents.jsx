@@ -1,6 +1,5 @@
 import ArrowRight from '../assets/icon_arrowright_blue.svg'
 import { useState } from 'react'
-import React from 'react'
 
 export default function TempContents() {
     const [resultCara, setResultCara] = useState('Welcome to converter 3000\nResult steps will appear here');
