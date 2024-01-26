@@ -1,5 +1,6 @@
 {
-  "name": "my-project",
+  "homepage": "https://javendzk.github.io/Exer-Oprec-24",
+  "name": "src",
   "private": true,
   "version": "0.0.0",
   "type": "module",
