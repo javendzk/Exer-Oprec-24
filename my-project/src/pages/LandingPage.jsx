@@ -1,4 +1,4 @@
-import NavBar from '../components/NavbarScroll.jsx'
+import Navbar from '../components/NavbarLanding.jsx'
 import MenuPicker from '../components/MenuPicker.jsx'
 import LandingContent from '../components/LandingContents.jsx'
 import Footer from '../components/Footer.jsx'
@@ -64,7 +64,7 @@ export default function LandingPage() {
             <div>
                 <img src={BgFull} className="w-full h-full object-cover m-0 p-0 select-none" alt="Background" />
                 <motion.div variants={fadeInAnimation}  initial="before" animate="afterA" viewport={{ once:true }}>
-                    <NavBar onscroll={handleScroll}/>
+                    <Navbar onscroll={handleScroll}/>
                 </motion.div>
                 <motion.div variants={fadeInAnimation}  initial="before" animate="afterB" viewport={{ once:true }}>
                     <LandingContent />

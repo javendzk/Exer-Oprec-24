@@ -1,5 +1,5 @@
-import NavBar from '../components/NavbarCasual.jsx'
-import TempContent from '../components/TempContents.jsx'
+import Navbar from '../components/NavbarServices.jsx'
+import TempContents from '../components/TempContents.jsx'
 import Footer from '../components/Footer.jsx'
 import { useState } from 'react'
 import { motion } from "framer-motion"
@@ -8,16 +8,10 @@ const fadeInAnimation = {
     before: {
         opacity: 0,
     },
-    afterA: {
+    after: {
         opacity: 1,
         transition: {
             delay: 0.03,
-        },
-    },
-    afterB: {
-        opacity: 1,
-        transition: {
-            delay: 0.15,
         },
     },
 };
@@ -73,17 +67,15 @@ export default function TemperaturePage() {
     return (
         <div>
             <div className="bg_half_flexible">
-                <motion.div variants={fadeInAnimation}  initial="before" animate="afterA" viewport={{ once:true }}>
-                    <NavBar onscroll={handleScroll}/>
+                <motion.div variants={fadeInAnimation}  initial="before" animate="after" viewport={{ once:true }}>
+                    <Navbar onscroll={handleScroll}/>
                 </motion.div>
                 <motion.div variants={fadeUpAnimation}  initial="before" animate="after" viewport={{ once:true }}>
-                    <TempContent />
+                    <TempContents />
                 </motion.div>
             </div>
             <div className='my-80 h-2'></div>
-            <motion.div variants={fadeInAnimation}  initial="before" animate="afterB" viewport={{ once:true }}>
-                <Footer />
-            </motion.div>
+            <Footer />
         </div> 
     )
 }

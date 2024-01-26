@@ -10,16 +10,17 @@ import axios from 'axios';
 export default function CurrencyContents() {
     const [duid, setDuid] = useState('0.00');
     const [date, setDate] = useState('');
-    const [currencyBefore, setCurrencyBefore] = useState("IDR");
-    const [currencyAfter, setCurrencyAfter] = useState("USD");
+    const [currencyBefore, setCurrencyBefore] = useState('IDR');
+    const [currencyAfter, setCurrencyAfter] = useState('USD');
     const [flagBefore, setFlagBefore] = useState(FlagIDR);
     const [flagAfter, setFlagAfter] = useState(FlagUSD);
-    const [resultTotal, setResultTotal] = useState("= USD");
-    const [resultSatuan, setResultSatuan] = useState("1 IDR = USD");
+    const [resultTotal, setResultTotal] = useState('= USD');
+    const [resultSatuan, setResultSatuan] = useState('1 IDR = USD');
     const [satuanRate, setSatuanRate] = useState('');
     const [loading, setLoading] = useState(false);
+    // yea.. kebanyakan useState hehe
     
-    const sleep = ms => new Promise(r => setTimeout(r, ms));  // promise sleep dari stackoverflow
+    const sleep = ms => new Promise(r => setTimeout(r, ms));  
 
     const handleDuidBlur = () => {
         let formattedDuid = parseFloat(duid).toFixed(2);
@@ -27,23 +28,37 @@ export default function CurrencyContents() {
         setDuid(formattedDuid);
     };
 
-    const refreshRate = async() => {
+    const refreshRates = async() => {
         setLoading(true);
-        await sleep(300);
-        let currencyBeforeLowerCase = currencyBefore.toLowerCase();
-        let currencyAfterLowerCase = currencyAfter.toLowerCase();
 
-        axios.get(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currencyBeforeLowerCase}.json`)
+        const currencyAPI = {
+            method: 'GET',
+            url: 'https://currency-converter-pro1.p.rapidapi.com/latest-rates',
+            params: {
+              base: `${currencyBefore}`,
+              currencies: `${currencyAfter}`,
+            },
+            headers: {
+              'X-RapidAPI-Key': '7e7ef63d91mshb5a82afc51d515dp12f77ajsn4e7ac9e2f32e',
+              'X-RapidAPI-Host': 'currency-converter-pro1.p.rapidapi.com'
+            }
+        };
+
+        axios.request(currencyAPI)
         .then(function (response) {
-            setSatuanRate(response["data"][currencyBeforeLowerCase][currencyAfterLowerCase]);
-            const formattedDate = new Date(response["data"]["date"]).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-            setDate(formattedDate);
+            setSatuanRate(response.data.result[currencyAfter]);
+            const timestampUnix = (response.data.timestamp);
+            const formattedDate = new Date(timestampUnix).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const formattedTime = new Date(timestampUnix).toLocaleTimeString('en-US', { hour12: false  });
+            setDate(`${formattedDate} ${formattedTime} WIB`);
         })
         .catch(function (error) {
             setResultTotal("Fetching rate failed");
             setResultSatuan("Retry by refreshing the page");
             console.log(error);
         });
+
+        await sleep(300);
         setLoading(false);
     };
 
@@ -54,8 +69,9 @@ export default function CurrencyContents() {
             return;
         }
 
-        refreshRate();
+        refreshRates();
         handleDuidChange();
+        disableButton();
     }, [currencyBefore, currencyAfter, satuanRate]);
 
     const handleDuidChange = () => {
@@ -69,18 +85,18 @@ export default function CurrencyContents() {
                 minimumFractionDigits: 8, maximumFractionDigits: 8,
             });
             formattedResultSatuan = (satuanRate).toLocaleString('en-US', {
-                minimumFractionDigits: 9, maximumFractionDigits: 9,
+                minimumFractionDigits: 3, maximumFractionDigits: 9,
             });
         } else if (currencyBefore == "BTC") {
             formattedResultTotal = (satuanRate * value).toLocaleString('en-US', {
-                minimumFractionDigits: 3, maximumFractionDigits: 3,
+                minimumFractionDigits: 3, maximumFractionDigits: 6,
             });
             formattedResultSatuan = (satuanRate).toLocaleString('en-US', {
-                minimumFractionDigits: 3, maximumFractionDigits: 3,
+                minimumFractionDigits: 3, maximumFractionDigits: 9,
             });
         } else {
             formattedResultTotal = (satuanRate * value).toLocaleString('en-US', {
-                minimumFractionDigits: 3, maximumFractionDigits: 3,
+                minimumFractionDigits: 3, maximumFractionDigits: 6,
             });
             formattedResultSatuan = (satuanRate).toLocaleString('en-US', {
                 minimumFractionDigits: 6, maximumFractionDigits: 6,
@@ -90,6 +106,14 @@ export default function CurrencyContents() {
         setResultTotal(`= ${formattedResultTotal} ${currencyAfter}`);
         setResultSatuan(`1 ${currencyBefore} = ${formattedResultSatuan} ${currencyAfter}`);
     };
+
+    // refresh harus kasi delay biar ga cepet kena limit
+    const disableButton = async() => {
+        const button = document.getElementById("button_refresh");
+        button.classList.add("button_disable");
+        await sleep(4000);
+        button.classList.remove("button_disable");
+    }
 
     return (
         <div className="flex flex-col absolute top-32 w-full">
@@ -145,15 +169,19 @@ export default function CurrencyContents() {
                         </div>
                         <div className='flex flex-col justify-between w-2/5 select-text'>
                             <div className='flex flex-row w-full justify-between h-12 items-center'>
-                                <button onClick={() => window.open("https://github.com/fawazahmed0/currency-api")} className=' flex justify-center items-center border-2 hover:bg-blue-100 bg-white border-blue-800 hover:border-blue-600 shadow-md duration-500 rounded-lg text-blue-800 hover:text-blue-600 text-sm font-open h-12 width_48'>API Provider</button>
-                                <button onClick={() => setSatuanRate('')} className='text-sm flex justify-center items-center shadow-md hover:bg-blue-600 duration-500 rounded-lg text-white font-open h-12  bg-blue-800 width_48'>Refresh
+                                <button onClick={() => window.open("https://rapidapi.com/Dezento/api/currency-converter-pro1")} className=' flex justify-center items-center border-2 hover:bg-blue-100 bg-white border-blue-800 hover:border-blue-600 shadow-md duration-500 rounded-lg text-blue-800 hover:text-blue-600 text-sm font-open h-12 width_48'>API Provider</button>
+                                <button id="button_refresh" onClick={() => setSatuanRate('')} className='text-sm flex justify-center items-center shadow-md hover:bg-blue-600 duration-500 rounded-lg text-white font-open h-12  bg-blue-800 width_48'>Refresh
                                     <img src={ArrowRefresh} className='ml-2 w-4'></img>
                                 </button>
                             </div>
-                            <div className='text-gray-600 font-inter flex flex-row justify-start items-start text-xs tracking-wider mt-3'>
-                                <p>Real-time exchange rates by Fawazahmed<br />last API Update: {date}</p>
-                                <img className="w-1 h-1 opacity-0" src={FlagBTC}></img>
-                                <img className="w-1 h-1 opacity-0" src={FlagJPY}></img>
+                            <div className='text-gray-600 font-inter flex flex-col justify-start items-start text-xs tracking-wider mt-3 responsive_text'>
+                                <p>My free API's hard limit is 3000 requests<br />Updated {date}</p>
+                                <div className='w-full h-1 flex flex-row'>
+                                    <img className="w-1 h-1 opacity-0" src={FlagBTC}></img>
+                                    <img className="w-1 h-1 opacity-0" src={FlagJPY}></img>
+                                    <img className="w-1 h-1 opacity-0" src={FlagIDR}></img>
+                                    <img className="w-1 h-1 opacity-0" src={FlagUSD}></img>
+                                </div>
                             </div>
                         </div>
                     </div>

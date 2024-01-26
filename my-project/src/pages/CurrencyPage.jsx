@@ -1,8 +1,12 @@
-import NavBar from '../components/NavbarCasual.jsx'
-import CurrencyContent from '../components/CurrencyContents.jsx'
+import Navbar from '../components/NavbarServices.jsx'
+import CurrencyContents from '../components/CurrencyContents.jsx'
 import Footer from '../components/Footer.jsx'
 import { useState } from 'react'
 import { motion } from "framer-motion"
+
+// kalo CurrencyContents kena API limit, bisa ganti key
+// backup key 1 : 4bf617d0a1msha9e4a4dd7507db5p12f2cdjsnb51aef32ce0c
+// backup key 2 :
 
 const fadeInAnimation = {
   before: {
@@ -70,10 +74,10 @@ export default function TemperaturePage() {
         <div >
             <div className="bg_half_flexible">
                 <motion.div variants={fadeInAnimation}  initial="before" animate="after" viewport={{ once:true }}>
-                    <NavBar onscroll={handleScroll}/>
+                    <Navbar onscroll={handleScroll}/>
                 </motion.div>
                 <motion.div variants={fadeUpAnimation}  initial="before" animate="after" viewport={{ once:true }}>
-                    <CurrencyContent />
+                    <CurrencyContents />
                 </motion.div>
             </div>
             <div className='my-80 h-2'></div>
