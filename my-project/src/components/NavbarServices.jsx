@@ -1,4 +1,3 @@
-// Navbar casual -> ukuran logo ga berubah
 import javn from '../assets/logo_javen.png'
 import NavItem from './NavItem.jsx'
 import React, { useState, useEffect } from 'react'

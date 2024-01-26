@@ -1,5 +1,5 @@
 import ArrowRight from '../assets/icon_arrowright_blue.svg'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import FlagBTC from '../assets/flag_btc.png'
 import FlagJPY from '../assets/flag_jpy.png'
 import FlagUSD from '../assets/flag_usd.png'
@@ -18,7 +18,7 @@ export default function CurrencyContents() {
     const [resultSatuan, setResultSatuan] = useState('1 IDR = USD');
     const [satuanRate, setSatuanRate] = useState('');
     const [loading, setLoading] = useState(false);
-    // yea.. kebanyakan useState hehe
+    // kayaknya benyakan useState hehe
     
     const sleep = ms => new Promise(r => setTimeout(r, ms));  
 
@@ -39,7 +39,7 @@ export default function CurrencyContents() {
               currencies: `${currencyAfter}`,
             },
             headers: {
-              'X-RapidAPI-Key': '7e7ef63d91mshb5a82afc51d515dp12f77ajsn4e7ac9e2f32e',
+              'X-RapidAPI-Key': '4bf617d0a1msha9e4a4dd7507db5p12f2cdjsnb51aef32ce0c',
               'X-RapidAPI-Host': 'currency-converter-pro1.p.rapidapi.com'
             }
         };

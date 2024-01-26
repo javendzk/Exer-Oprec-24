@@ -39,25 +39,22 @@ export default function LandingPage() {
     const handleScroll = () => {
         const isScrolled = window.scrollY > 0;
           
-            // jaga" kalo scroll ke atas lagi   
-            if (window.scrollY === 0) {
-                setBackground({
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    boxShadow: 'none',
-                });
-              
-            } 
+        if (window.scrollY === 0) {
+            setBackground({
+                backgroundColor: 'transparent',
+                border: 'none',
+                boxShadow: 'none',
+            });   
+        } 
             
-            // style kirim ke navbar buat modify bg
-            else {
-                setBackground({
-                    backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent',
-                    border: isScrolled ? '1px solid' : 'none',
-                    boxShadow: isScrolled ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : 'none',
-                });
-            }
-        };
+        else {
+            setBackground({
+                backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent',
+                border: isScrolled ? '1px solid' : 'none',
+                boxShadow: isScrolled ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : 'none',
+            });
+        }
+    };
 
     return (
         <div>

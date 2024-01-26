@@ -9,7 +9,7 @@ export default function TempContents() {
     const [unitAfterDisplay, setUnitAfterDisplay] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const sleep = ms => new Promise(r => setTimeout(r, ms));  // promise sleep dari stackoverflow
+    const sleep = ms => new Promise(r => setTimeout(r, ms)); 
 
     const executeConvert = async() => {
         // unitAfter ga perlu update display real time, bisa tanpa useState

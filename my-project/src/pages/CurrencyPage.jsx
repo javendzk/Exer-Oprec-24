@@ -5,20 +5,18 @@ import { useState } from 'react'
 import { motion } from "framer-motion"
 
 // kalo CurrencyContents kena API limit, bisa ganti key
-// backup key 1 : 4bf617d0a1msha9e4a4dd7507db5p12f2cdjsnb51aef32ce0c
-// backup key 2 :
+// backup key: '7e7ef63d91mshb5a82afc51d515dp12f77ajsn4e7ac9e2f32e'
 
 const fadeInAnimation = {
-  before: {
-      opacity: 0.2,
-  },
-
-  after: {
-      opacity: 1,
-      transition: {
-          delay: 0.03,
-      },
-  },
+    before: {
+        opacity: 0.2,
+    },
+    after: {
+        opacity: 1,
+        transition: {
+            delay: 0.03,
+        },
+    },
 };
 
 const fadeUpAnimation = {
@@ -50,25 +48,22 @@ export default function TemperaturePage() {
     const handleScroll = () => {
         const isScrolled = window.scrollY > 0;
           
-            // jaga" kalo scroll ke atas lagi   
-            if (window.scrollY === 0) {
-                setBackground({
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    boxShadow: 'none',
-                });
-              
-            } 
+        if (window.scrollY === 0) {
+            setBackground({
+                backgroundColor: 'transparent',
+                border: 'none',
+                boxShadow: 'none',
+            });   
+        } 
             
-            // style kirim ke navbar buat modify bg
-            else {
-                setBackground({
-                    backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent',
-                    border: isScrolled ? '1px solid' : 'none',
-                    boxShadow: isScrolled ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : 'none',
-                });
-            }
-        };
+        else {
+            setBackground({
+                backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent',
+                border: isScrolled ? '1px solid' : 'none',
+                boxShadow: isScrolled ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : 'none',
+            });
+        }
+    };
 
     return (
         <div >

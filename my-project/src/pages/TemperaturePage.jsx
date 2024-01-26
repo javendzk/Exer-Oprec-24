@@ -42,19 +42,16 @@ export default function TemperaturePage() {
     });
 
     const handleScroll = () => {
-    const isScrolled = window.scrollY > 0;
-      
-        // jaga" kalo scroll ke atas lagi   
+        const isScrolled = window.scrollY > 0;
+          
         if (window.scrollY === 0) {
             setBackground({
                 backgroundColor: 'transparent',
                 border: 'none',
                 boxShadow: 'none',
-            });
-          
+            });   
         } 
-        
-        // style kirim ke navbar buat modify bg
+            
         else {
             setBackground({
                 backgroundColor: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent',
