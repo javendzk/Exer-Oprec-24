@@ -22,7 +22,7 @@ export default function NavBar({ onScroll }) {
             <img src={javn} className="mb-3 float-left mt-2.5 ml-2.5 mr-24 h-8"></img>
             <nav>
                 <ul>
-                    <NavItem title="Home" target="/home" />
+                    <NavItem title="Home" target="/" />
                     <NavItem title="Currency" target="/currency" />
                     <NavItem title="Temperature" target="/temperature" />
                 </ul>
