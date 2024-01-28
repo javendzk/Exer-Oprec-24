@@ -126,8 +126,8 @@ export default function CurrencyContents() {
                     <div className='flex flex-col mt-6 w-full'>
                         <label className="font-open text-gray-600" htmlFor="div_amount">Amount</label>
                         <div id="div_amount" className='flex flex-row justify-between m-0 p-o rounded-md border_1 border-gray-300 shadow-md w-full h-12'>
-                            <div className='flex items-center pl-3 text-md font-bold font-poppins rounded-md bg-none border-none focus:outline-none'>Rp</div>
-                            <input type='text' value={duid} id="duid_id" onBlur={handleDuidBlur} onChange={handleDuidChange} inputMode='numeric' className='flex align-center pl-1 text-md font-poppins rounded-md resize-none w-full h-full border-none focus:outline-none focus:border-blue-500' />
+                            <div className='flex items-center pl-3 text-md font-bold font-poppins rounded-md bg-none border-none focus:outline-none'>{currencyBefore}</div>
+                            <input type='text' value={duid} id="duid_id" onBlur={handleDuidBlur} onChange={handleDuidChange} inputMode='numeric' className='flex align-center pl-2 text-md font-poppins rounded-md resize-none w-full h-full border-none focus:outline-none focus:border-blue-500' />
                             <div className={`loader mt-2 mx-2 ${loading? "opacity-100" : "opacity-0"}`} ></div>
                         </div>
                     </div>
